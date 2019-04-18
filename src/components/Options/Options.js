@@ -29,7 +29,7 @@ function ListItemLink(props) {
 }
 
 function SimpleList(props) {
-  const { classes } = props;
+  const { classes, onClick } = props;
   return (
       <div className={classes.root}>
         <List component="nav">
@@ -42,7 +42,11 @@ function SimpleList(props) {
           </ul>
           <ul>
           <ListSubheader>Cheese Options</ListSubheader>
-          <ListItem button divider>
+          <ListItem
+            onClick={() => onClick('Pepperoni')}
+            button
+            divider
+          >
             <ListItemText primary="Pepperoni" />
           </ListItem>
           <ListItem button divider>

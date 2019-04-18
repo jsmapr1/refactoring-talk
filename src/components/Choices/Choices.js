@@ -24,13 +24,17 @@ function ListItemLink(props) {
 }
 
 function SimpleList(props) {
-  const { classes } = props;
+  const { classes, toppings } = props;
   return (
       <div className={classes.root}>
         <List component="nav">
-          <ListItem button>
-            <ListItemText primary="Trash" />
-          </ListItem>
+          {toppings.map(topping => {
+          return(
+            <ListItem button>
+              <ListItemText primary={topping} />
+            </ListItem>
+          )
+          })}
         </List>
       </div>
     );

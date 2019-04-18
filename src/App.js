@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Options from './components/Options/Options';
-import Choices from './components/Choices/Choices';
+import PizzaMaker from './components/PizzaMaker/PizzaMaker';
 
 class App extends Component {
   render() {
@@ -12,8 +11,7 @@ class App extends Component {
             Build Your Stuff
         </header>
         <div className="main">
-          <Options />
-          <Choices />
+          <PizzaMaker />
         </div>
       </div>
     );
