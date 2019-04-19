@@ -10,38 +10,38 @@ function validateOption(topping) {
 
 let x = '';
 function changeVar() {
-  x = 'hi'
+  x = 'hi';
 }
 
 const options = [
   {
     name: 'pepperoni',
-    type: 'meat'
+    type: 'meat',
   },
   {
     name: 'sausage',
-    type: 'meat'
+    type: 'meat',
   },
   {
     name: 'mozarella',
-    type: 'cheese'
+    type: 'cheese',
   },
   {
     name: 'thin',
-    type: 'crust'
-  }
+    type: 'crust',
+  },
 ];
 
 export function init() {
   const initial = options.reduce((sorted, option) => {
     const { type } = option;
-    if(sorted.has(type)) {
-      sorted.set(type, [...sorted.get(type), option])
-      return sorted
+    if (sorted.has(type)) {
+      sorted.set(type, [...sorted.get(type), option]);
+      return sorted;
     }
-    sorted.set(type, [option])
+    sorted.set(type, [option]);
     return sorted;
-  }, new Map)
+  }, new Map());
   return [...initial];
 }
 
@@ -49,7 +49,7 @@ export default () => ({
   changeVar,
   init,
   x,
-})
+});
 
 // Other ideas. Make 'designs' and then call things bugs.
 // Have a pop up after the third thing or something like that.
