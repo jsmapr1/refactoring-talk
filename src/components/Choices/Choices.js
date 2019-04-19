@@ -28,9 +28,10 @@ function SimpleList(props) {
   return (
       <div className={classes.root}>
         <List component="nav">
+          <h1>Your Meal</h1>
           {toppings.map(topping => {
           return(
-            <ListItem button>
+            <ListItem divider button>
               <ListItemText primary={topping} />
             </ListItem>
           )
