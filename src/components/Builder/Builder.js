@@ -1,36 +1,14 @@
-function getAvailableOptions() {
-  // Get options from API
+import { options } from './options';
+let toppings = [];
+
+function addTopping(topping) {
+  toppings = [...toppings, topping]
+  return Promise.resolve(toppings);
 }
 
-function validateOption(topping) {
-  // Maybe there's a super expensive topping
-  // Like a single DoDo egg and you don't want
-  // it to be bad.
+function getToppings() {
+  return toppings;
 }
-
-let x = '';
-function changeVar() {
-  x = 'hi';
-}
-
-const options = [
-  {
-    name: 'onion',
-    type: 'vegetables',
-  },
-  {
-    name: 'green peppers',
-    type: 'vegetables',
-  },
-  {
-    name: 'mozarella',
-    type: 'cheese',
-  },
-  {
-    name: 'thin',
-    type: 'crust',
-  },
-];
 
 export function init() {
   const initial = options.reduce((sorted, option) => {
@@ -46,10 +24,6 @@ export function init() {
 }
 
 export default () => ({
-  changeVar,
+  addTopping,
   init,
-  x,
 });
-
-// Other ideas. Make 'designs' and then call things bugs.
-// Have a pop up after the third thing or something like that.

@@ -4,19 +4,16 @@ import Choices from '../Choices/Choices';
 import Builder from '../Builder/Builder';
 
 export default function PizzaMaker() {
-  const { changeVar, init } = Builder();
+  const [toppings, setToppings] = useState([]);
+  const { addTopping, init } = Builder();
 
-  const [toppings, addToppings] = useState([]);
-
-  function handleAdd(topping) {
-    changeVar();
-
-    return (addToppings(current => [...current, topping]));
+  const update = (topping) => {
+    addTopping(topping)
+    .then(toppings => setToppings(toppings))
   }
-
   return (
     <>
-      <Options onClick={handleAdd} options={init()} />
+      <Options onClick={update} options={init()} />
       <Choices toppings={toppings} />
     </>
   );
