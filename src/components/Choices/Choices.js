@@ -19,7 +19,7 @@ function SimpleList(props) {
   return (
     <div className={classes.root}>
       <List component="nav">
-        <h1>Your Meal</h1>
+        <h1>Your Custom Order</h1>
         {toppings.map(topping => (
           <ListItem divider button>
             <ListItemText primary={topping} />

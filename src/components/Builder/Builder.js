@@ -15,12 +15,12 @@ function changeVar() {
 
 const options = [
   {
-    name: 'pepperoni',
-    type: 'meat',
+    name: 'onion',
+    type: 'vegetables',
   },
   {
-    name: 'sausage',
-    type: 'meat',
+    name: 'green peppers',
+    type: 'vegetables',
   },
   {
     name: 'mozarella',

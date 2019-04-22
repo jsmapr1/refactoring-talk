@@ -4,7 +4,7 @@ import Choices from '../Choices/Choices';
 import Builder from '../Builder/Builder';
 
 export default function PizzaMaker() {
-  const { changeVar, init, x } = Builder();
+  const { changeVar, init } = Builder();
 
   const [toppings, addToppings] = useState([]);
 
