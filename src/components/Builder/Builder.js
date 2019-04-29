@@ -1,3 +1,4 @@
+import ohYeah from './images/ohyeah.gif'
 let toppings = [];
 
 function addTopping(topping) {
@@ -14,6 +15,40 @@ function removeTopping(index) {
 
 function getToppings() {
   return toppings;
+}
+
+
+
+function rand() {
+  return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+  const top = 50;
+  const left = 50;
+  return {
+    position: 'absolute',
+    width: 400,
+    backgroundColor: '#fff',
+    boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
+    padding: 32,
+    outline: 'none',
+    top: `${top}%`,
+    left: `${left}%`,
+    transform: `translate(-${top}%, -${left}%)`,
+  };
+}
+
+function displayMarketingMessage(callback, config) {
+  setTimeout(() => {
+    callback(
+      {
+        getModalStyle,
+        image: ohYeah,
+        text: 'Dude, you rock so F****cking hard'
+      }
+    )
+  }, config.time)
 }
 
 export async function init() {
@@ -35,6 +70,7 @@ export async function init() {
 
 export default () => ({
   addTopping,
+  displayMarketingMessage,
   removeTopping,
   init,
 });
