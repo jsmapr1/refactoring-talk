@@ -5,6 +5,13 @@ function addTopping(topping) {
   return Promise.resolve(toppings);
 }
 
+function removeTopping(index) {
+  const copy = [...toppings]
+  copy.splice(index);
+  toppings = [...copy];
+  return Promise.resolve(toppings);
+}
+
 function getToppings() {
   return toppings;
 }
@@ -28,5 +35,6 @@ export async function init() {
 
 export default () => ({
   addTopping,
+  removeTopping,
   init,
 });

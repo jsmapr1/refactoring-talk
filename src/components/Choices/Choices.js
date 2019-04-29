@@ -1,10 +1,20 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const styles = theme => ({
+  item: {
+    '&:hover $delete': {
+      display: 'inline-block'
+    }
+  },
+  delete: {
+    display: 'none',
+  },
   root: {
     width: '100%',
     maxWidth: 360,
@@ -15,14 +25,15 @@ const styles = theme => ({
 });
 
 function SimpleList(props) {
-  const { classes, toppings } = props;
+  const { classes, onRemove, toppings } = props;
   return (
     <div className={classes.root}>
       <List component="nav">
         <h1>Your Custom Order</h1>
-        {toppings.map(topping => (
-          <ListItem divider button>
+        {toppings.map((topping, index) => (
+          <ListItem divider button className={classes.item} onClick={() => onRemove(index)}>
             <ListItemText primary={topping} />
+              <DeleteForeverIcon className={classes.delete}/>
           </ListItem>
         ))}
       </List>
