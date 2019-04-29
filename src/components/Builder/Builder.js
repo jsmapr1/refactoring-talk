@@ -1,4 +1,3 @@
-import { options } from './options';
 let toppings = [];
 
 function addTopping(topping) {
@@ -10,17 +9,21 @@ function getToppings() {
   return toppings;
 }
 
-export function init() {
-  const initial = options.reduce((sorted, option) => {
-    const { type } = option;
-    if (sorted.has(type)) {
-      sorted.set(type, [...sorted.get(type), option]);
-      return sorted;
-    }
-    sorted.set(type, [option]);
-    return sorted;
-  }, new Map());
-  return [...initial];
+export async function init() {
+  return fetch('http://localhost:3009/toppings')
+    .then(response => response.json())
+    .then(options => {
+      const initial = options.reduce((sorted, option) => {
+        const { type } = option;
+        if (sorted.has(type)) {
+          sorted.set(type, [...sorted.get(type), option]);
+          return sorted;
+        }
+        sorted.set(type, [option]);
+        return sorted;
+      }, new Map());
+      return [...initial];
+    })
 }
 
 export default () => ({
