@@ -7,7 +7,18 @@ function addTopping(callback, { name, id }) {
     .then(({ available }) => {
       if(available) {
         toppings = [...toppings, name]
-        return toppings;
+        const modified = [...toppings.reduce((all, topping) => {
+          if(!all.get(topping)) {
+            all.set(topping, 1)
+            return all;
+          }
+          all.set(topping, all.get(topping) + 1);
+          return all
+        }, new Map())
+        ].map(([name, count]) => {
+          return `${name} ${count === 1 ? '' : `(${count})`}`
+        })
+        return modified;
       }
       callback({
         getModalStyle: () => {
@@ -27,16 +38,39 @@ function addTopping(callback, { name, id }) {
         },
         text: 'Topping Not Available'
       })
-      return toppings;
+      const modified = [...toppings.reduce((all, topping) => {
+        if(!all.get(topping)) {
+          all.set(topping, 1)
+          return all;
+        }
+        all.set(topping, all.get(topping) + 1);
+        return all
+      }, new Map())
+      ].map(([name, count]) => {
+        return `${name} ${count === 1 ? '' : `(${count})`}`
+      })
+      return modified;
     })
 
 }
 
-function removeTopping(index) {
+function removeTopping({ name }) {
   const copy = [...toppings]
+  const index = copy.indexOf(name);
   copy.splice(index);
   toppings = [...copy];
-  return Promise.resolve(toppings);
+  const modified = [...toppings.reduce((all, topping) => {
+    if(!all.get(topping)) {
+      all.set(topping, 1)
+      return all;
+    }
+    all.set(topping, all.get(topping) + 1);
+    return all
+  }, new Map())
+  ].map(([name, count]) => {
+    return `${name} ${count === 1 ? '' : `(${count})`}`
+  })
+  return Promise.resolve(modified);
 }
 
 function getToppings() {

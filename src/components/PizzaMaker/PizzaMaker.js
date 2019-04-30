@@ -27,8 +27,8 @@ export default function PizzaMaker() {
     .then(toppings => setToppings(toppings))
   }
 
-  const handleRemove = (index) => {
-    removeTopping(index)
+  const handleRemove = (topping) => {
+    removeTopping(topping)
     .then(toppings => setToppings(toppings))
   }
 

@@ -30,8 +30,8 @@ function SimpleList(props) {
     <div className={classes.root}>
       <List component="nav">
         <h1>Your Custom Order</h1>
-        {toppings.map((topping, index) => (
-          <ListItem divider button className={classes.item} onClick={() => onRemove(index)}>
+        {toppings.map((topping) => (
+          <ListItem divider button className={classes.item} onClick={() => onRemove(topping)}>
             <ListItemText primary={topping} />
               <DeleteForeverIcon className={classes.delete}/>
           </ListItem>
