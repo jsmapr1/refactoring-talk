@@ -1,9 +1,35 @@
 import ohYeah from './images/ohyeah.gif'
 let toppings = [];
 
-function addTopping(topping) {
-  toppings = [...toppings, topping]
-  return Promise.resolve(toppings);
+function addTopping(callback, { name, id }) {
+  return fetch(`http://localhost:3009/toppings/${id}`)
+    .then(response => response.json())
+    .then(({ available }) => {
+      if(available) {
+        toppings = [...toppings, name]
+        return toppings;
+      }
+      callback({
+        getModalStyle: () => {
+          const top = 50;
+          const left = 50;
+          return {
+            position: 'absolute',
+            width: 400,
+            backgroundColor: '#fff',
+            boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
+            padding: 32,
+            outline: 'none',
+            top: `${top}%`,
+            left: `${left}%`,
+            transform: `translate(-${top}%, -${left}%)`,
+          };
+        },
+        text: 'Topping Not Available'
+      })
+      return toppings;
+    })
+
 }
 
 function removeTopping(index) {
@@ -18,32 +44,25 @@ function getToppings() {
 }
 
 
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-  return {
-    position: 'absolute',
-    width: 400,
-    backgroundColor: '#fff',
-    boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
-    padding: 32,
-    outline: 'none',
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
-
 function displayMarketingMessage(callback, config) {
   setTimeout(() => {
     callback(
       {
-        getModalStyle,
+        getModalStyle: () => {
+          const top = 50;
+          const left = 50;
+          return {
+            position: 'absolute',
+            width: 400,
+            backgroundColor: '#fff',
+            boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
+            padding: 32,
+            outline: 'none',
+            top: `${top}%`,
+            left: `${left}%`,
+            transform: `translate(-${top}%, -${left}%)`,
+          };
+        },
         image: ohYeah,
         text: 'Dude, you rock so F****cking hard'
       }

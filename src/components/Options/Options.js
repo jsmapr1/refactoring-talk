@@ -22,7 +22,7 @@ const styles = theme => ({
 });
 
 function SimpleList(props) {
-  const { classes, onClick, options } = props;
+  const { classes, onAdd, onClick, options } = props;
   return (
     <div className={classes.root}>
       <List component="nav">
@@ -33,7 +33,7 @@ function SimpleList(props) {
           <ListSubheader>{sub}</ListSubheader>
           {optionGroup.map(option => (
             <ListItem
-              onClick={() => onClick(option.name)}
+              onClick={() => onClick(option)}
               button
               divider
             >

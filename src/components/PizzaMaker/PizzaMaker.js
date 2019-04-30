@@ -23,7 +23,7 @@ export default function PizzaMaker() {
   }, [])
 
   const update = (topping) => {
-    addTopping(topping)
+    addTopping(setMarketingMessage, topping)
     .then(toppings => setToppings(toppings))
   }
 
