@@ -1,10 +1,18 @@
 module.exports = (req, res, next) => {
-  const hasTopping = /toppings\/\d/.test(req.url);
-  if(hasTopping) {
+  const toppingIndex = req.url.match(/\d/);
+  if(!toppingIndex) {
+    next();
+    return;
+  }
+  const index = Number(toppingIndex[0]);
+  if(index === 5) {
     res.send({
-      available: Math.random() > .5
+      available: false
     })
     return;
   }
-  next()
+  res.send({
+    available: true
+  })
+  return;
 }

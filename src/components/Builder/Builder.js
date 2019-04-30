@@ -1,5 +1,7 @@
 import ohYeah from './images/ohyeah.gif'
+import save from './images/tobias.gif';
 let toppings = [];
+let askedSaved = false;
 
 function addTopping(callback, { name, id }) {
   return fetch(`http://localhost:3009/toppings/${id}`)
@@ -7,6 +9,31 @@ function addTopping(callback, { name, id }) {
     .then(({ available }) => {
       if(available) {
         toppings = [...toppings, name]
+        if(toppings.length > 3 && !askedSaved) {
+          askedSaved = true;
+          callback({
+            getModalStyle: () => {
+              const top = 50;
+              const left = 50;
+              return {
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                position: 'absolute',
+                width: 600,
+                backgroundColor: '#fff',
+                boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
+                padding: 32,
+                outline: 'none',
+                top: `${top}%`,
+                left: `${left}%`,
+                transform: `translate(-${top}%, -${left}%)`,
+              };
+            },
+            image: save,
+            text: 'This is looking complicated? Would you like to save?'
+          })
+        }
         const modified = [...toppings.reduce((all, topping) => {
           if(!all.get(topping)) {
             all.set(topping, 1)
@@ -25,6 +52,9 @@ function addTopping(callback, { name, id }) {
           const top = 50;
           const left = 50;
           return {
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             position: 'absolute',
             width: 400,
             backgroundColor: '#fff',
@@ -87,6 +117,9 @@ function displayMarketingMessage(callback, config) {
           const left = 50;
           return {
             position: 'absolute',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             width: 400,
             backgroundColor: '#fff',
             boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',

@@ -19,6 +19,11 @@
       "id": 4,
       "name": "thin",
       "type": "crust"
+    },
+    {
+      "id": 5,
+      "name": "Dodo egg",
+      "type": "rare"
     }
   ]
 }
