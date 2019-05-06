@@ -1,5 +1,6 @@
-import ohYeah from './images/ohyeah.gif'
+import ohYeah from './images/ohyeah.gif';
 import save from './images/tobias.gif';
+
 let toppings = [];
 let askedSaved = false;
 
@@ -7,9 +8,9 @@ function addTopping(callback, { name, id }) {
   return fetch(`http://localhost:3009/toppings/${id}`)
     .then(response => response.json())
     .then(({ available }) => {
-      if(available) {
-        toppings = [...toppings, name]
-        if(toppings.length > 3 && !askedSaved) {
+      if (available) {
+        toppings = [...toppings, name];
+        if (toppings.length > 3 && !askedSaved) {
           askedSaved = true;
           callback({
             getModalStyle: () => {
@@ -31,20 +32,18 @@ function addTopping(callback, { name, id }) {
               };
             },
             image: save,
-            text: 'This is looking complicated? Would you like to save?'
-          })
+            text: 'This is looking complicated? Would you like to save?',
+          });
         }
         const modified = [...toppings.reduce((all, topping) => {
-          if(!all.get(topping)) {
-            all.set(topping, 1)
+          if (!all.get(topping)) {
+            all.set(topping, 1);
             return all;
           }
           all.set(topping, all.get(topping) + 1);
-          return all
-        }, new Map())
-        ].map(([name, count]) => {
-          return `${name} ${count === 1 ? '' : `(${count})`}`
-        })
+          return all;
+        }, new Map()),
+        ].map(([nameUpdate, count]) => `${nameUpdate} ${count === 1 ? '' : `(${count})`}`);
         return modified;
       }
       callback({
@@ -66,47 +65,41 @@ function addTopping(callback, { name, id }) {
             transform: `translate(-${top}%, -${left}%)`,
           };
         },
-        text: 'Topping Not Available'
-      })
+        text: 'Topping Not Available',
+      });
       const modified = [...toppings.reduce((all, topping) => {
-        if(!all.get(topping)) {
-          all.set(topping, 1)
+        if (!all.get(topping)) {
+          all.set(topping, 1);
           return all;
         }
         all.set(topping, all.get(topping) + 1);
-        return all
-      }, new Map())
-      ].map(([name, count]) => {
-        return `${name} ${count === 1 ? '' : `(${count})`}`
-      })
+        return all;
+      }, new Map()),
+      ].map(([nameUpdate, count]) => `${nameUpdate} ${count === 1 ? '' : `(${count})`}`);
       return modified;
-    })
-
+    });
 }
 
 function removeTopping({ name }) {
-  const copy = [...toppings]
+  const copy = [...toppings];
   const index = copy.indexOf(name);
   copy.splice(index);
   toppings = [...copy];
   const modified = [...toppings.reduce((all, topping) => {
-    if(!all.get(topping)) {
-      all.set(topping, 1)
+    if (!all.get(topping)) {
+      all.set(topping, 1);
       return all;
     }
     all.set(topping, all.get(topping) + 1);
-    return all
-  }, new Map())
-  ].map(([name, count]) => {
-    return `${name} ${count === 1 ? '' : `(${count})`}`
-  })
+    return all;
+  }, new Map()),
+  ].map(([nameUpdate, count]) => `${nameUpdate} ${count === 1 ? '' : `(${count})`}`);
   return Promise.resolve(modified);
 }
 
 function getToppings() {
   return toppings;
 }
-
 
 function displayMarketingMessage(callback, config) {
   setTimeout(() => {
@@ -131,16 +124,16 @@ function displayMarketingMessage(callback, config) {
           };
         },
         image: ohYeah,
-        text: 'Dude, you rock so F****cking hard'
-      }
-    )
-  }, config.time)
+        text: 'Dude, you rock so F****cking hard',
+      },
+    );
+  }, config.time);
 }
 
 export async function init() {
   return fetch('http://localhost:3009/toppings')
     .then(response => response.json())
-    .then(options => {
+    .then((options) => {
       const initial = options.reduce((sorted, option) => {
         const { type } = option;
         if (sorted.has(type)) {
@@ -151,7 +144,7 @@ export async function init() {
         return sorted;
       }, new Map());
       return [...initial];
-    })
+    });
 }
 
 export default () => ({

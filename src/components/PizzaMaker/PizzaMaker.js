@@ -8,39 +8,41 @@ export default function PizzaMaker() {
   const [marketingMessage, setMarketingMessage] = useState(null);
   const [options, setOptions] = useState([]);
   const [toppings, setToppings] = useState([]);
-  const { addTopping, displayMarketingMessage, removeTopping, init } = Builder();
+  const {
+    addTopping, displayMarketingMessage, removeTopping, init,
+  } = Builder();
 
   useEffect(() => {
-    displayMarketingMessage(setMarketingMessage, { time: 1000})
-  }, [])
+    displayMarketingMessage(setMarketingMessage, { time: 1000 });
+  }, []);
 
   useEffect(() => {
-    const fetch = async() => {
+    const fetch = async () => {
       const options = await init();
-      setOptions(options)
-    }
-    fetch()
-  }, [])
+      setOptions(options);
+    };
+    fetch();
+  }, []);
 
   const update = (topping) => {
     addTopping(setMarketingMessage, topping)
-    .then(toppings => setToppings(toppings))
-  }
+      .then(toppings => setToppings(toppings));
+  };
 
   const handleRemove = (topping) => {
     removeTopping(topping)
-    .then(toppings => setToppings(toppings))
-  }
+      .then(toppings => setToppings(toppings));
+  };
 
   return (
     <>
       <Modal
         open={marketingMessage}
-        marketingMessage={marketingMessage} 
+        marketingMessage={marketingMessage}
         onClose={() => setMarketingMessage(null)}
       />
       <Options onClick={update} options={options} />
-      <Choices toppings={toppings} onRemove={handleRemove}/>
+      <Choices toppings={toppings} onRemove={handleRemove} />
     </>
   );
 }

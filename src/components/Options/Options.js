@@ -22,7 +22,9 @@ const styles = theme => ({
 });
 
 function SimpleList(props) {
-  const { classes, onAdd, onClick, options } = props;
+  const {
+    classes, onAdd, onClick, options,
+  } = props;
   return (
     <div className={classes.root}>
       <List component="nav">

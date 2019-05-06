@@ -17,4 +17,5 @@ const options = [
   },
 ];
 
+export default options;
 export { options };

@@ -9,8 +9,8 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 const styles = theme => ({
   item: {
     '&:hover $delete': {
-      display: 'inline-block'
-    }
+      display: 'inline-block',
+    },
   },
   delete: {
     display: 'none',
@@ -30,10 +30,10 @@ function SimpleList(props) {
     <div className={classes.root}>
       <List component="nav">
         <h1>Your Custom Order</h1>
-        {toppings.map((topping) => (
+        {toppings.map(topping => (
           <ListItem divider button className={classes.item} onClick={() => onRemove(topping)}>
             <ListItemText primary={topping} />
-              <DeleteForeverIcon className={classes.delete}/>
+            <DeleteForeverIcon className={classes.delete} />
           </ListItem>
         ))}
       </List>
