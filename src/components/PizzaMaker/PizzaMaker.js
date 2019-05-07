@@ -18,26 +18,26 @@ export default function PizzaMaker() {
 
   useEffect(() => {
     const fetch = async () => {
-      const options = await init();
-      setOptions(options);
+      const fetchedOptions = await init();
+      setOptions(fetchedOptions);
     };
     fetch();
   }, []);
 
   const update = (topping) => {
     addTopping(setMarketingMessage, topping)
-      .then(toppings => setToppings(toppings));
+      .then(toppingsUpdate => setToppings(toppingsUpdate));
   };
 
   const handleRemove = (topping) => {
     removeTopping(topping)
-      .then(toppings => setToppings(toppings));
+      .then(toppingsUpdate => setToppings(toppingsUpdate));
   };
 
   return (
     <>
       <Modal
-        open={marketingMessage}
+        open={!!marketingMessage}
         marketingMessage={marketingMessage}
         onClose={() => setMarketingMessage(null)}
       />

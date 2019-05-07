@@ -1,9 +1,6 @@
 import Builder from './Builder';
 
 const {
-  addTopping,
-  displayMarketingMessage,
-  removeTopping,
   init,
 } = Builder();
 

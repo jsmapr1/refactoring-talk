@@ -1,11 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
 import MaterialModal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
 
 export default function Modal({ open, onClose, marketingMessage }) {
   return (
@@ -21,7 +15,7 @@ export default function Modal({ open, onClose, marketingMessage }) {
           style={{
           }}
         >
-          <img src={marketingMessage && marketingMessage.image} />
+          <img src={marketingMessage && marketingMessage.image} alt="marketing" />
         </div>
       </div>
     </MaterialModal>

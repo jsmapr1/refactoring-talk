@@ -1,6 +1,5 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -27,7 +26,7 @@ const styles = theme => ({
 function SimpleList(props) {
   const { classes, onRemove, toppings } = props;
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testId="order">
       <List component="nav">
         <h1>Your Custom Order</h1>
         {toppings.map(topping => (

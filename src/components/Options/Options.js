@@ -23,10 +23,10 @@ const styles = theme => ({
 
 function SimpleList(props) {
   const {
-    classes, onAdd, onClick, options,
+    classes, onClick, options,
   } = props;
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-testId="options">
       <List component="nav">
         <h1>Options</h1>
         {
