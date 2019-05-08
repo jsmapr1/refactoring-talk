@@ -20,9 +20,9 @@ describe('init', () => {
       type: 'vegetables',
     };
 
-    const mozarella = {
+    const mozzarella = {
       id: 3,
-      name: 'mozarella',
+      name: 'mozzarella',
       type: 'cheese',
     };
 
@@ -40,7 +40,7 @@ describe('init', () => {
 
     const expected = [
       ['vegetables', [onion, greenPeppers]],
-      ['cheese', [mozarella]],
+      ['cheese', [mozzarella]],
       ['crust', [crust]],
       ['rare', [dodo]],
     ];
