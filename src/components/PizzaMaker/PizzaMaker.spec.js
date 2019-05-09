@@ -3,6 +3,33 @@ import { getByText as getByTextDOM } from 'dom-testing-library'
 import {render, fireEvent, cleanup, waitForElement} from 'react-testing-library';
 import PizzaMaker from './PizzaMaker';
 
+const onion = {
+  id: 1,
+  name: 'onion',
+  type: 'vegetables',
+};
+
+const greenPeppers = {
+  id: 2,
+  name: 'green peppers',
+  type: 'vegetables',
+};
+
+const mozzarella = {
+  id: 3,
+  name: 'mozzarella',
+  type: 'cheese',
+};
+
+const mockOptions = [onion, greenPeppers, mozzarella];
+
+jest.mock('../../api/toppings', () => {
+  return {
+    fetchToppings: () => Promise.resolve(mockOptions),
+    fetchTopping: (id) => Promise.resolve({ available: id !== 2 })
+  }
+});
+
 afterEach(cleanup)
 
 describe('PizzaMaker', () => {

@@ -1,3 +1,4 @@
+import { fetchTopping, fetchToppings } from '../../api/toppings';
 import ohYeah from './images/ohyeah.gif';
 import save from './images/tobias.gif';
 
@@ -5,8 +6,7 @@ let toppings = [];
 let askedSaved = false;
 
 function addTopping(callback, { name, id }) {
-  return fetch(`http://localhost:3009/toppings/${id}`)
-    .then(response => response.json())
+  return fetchTopping(id)
     .then(({ available }) => {
       if (available) {
         toppings = [...toppings, name];
@@ -131,8 +131,7 @@ function displayMarketingMessage(callback, config) {
 }
 
 export async function init() {
-  return fetch('http://localhost:3009/toppings')
-    .then(response => response.json())
+  return fetchToppings()
     .then((options) => {
       const initial = options.reduce((sorted, option) => {
         const { type } = option;
