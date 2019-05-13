@@ -28,7 +28,9 @@ jest.mock('../../api/toppings', () => {
 });
 
 const {
+  addTopping,
   init,
+  removeTopping,
 } = Builder();
 
 describe('init', () => {
@@ -41,5 +43,33 @@ describe('init', () => {
     ];
 
     expect(results).toEqual(expected);
+  });
+});
+
+describe('remove topping', () => {
+  it('should remove toppings', async () => {
+    const results = await init();
+    const modified = await removeTopping('mozzarella');
+    expect(modified).toEqual([]);
+  });
+
+  it('should remove already added topping', async () => {
+    const moz = { 
+      id: 3,
+      name: 'mozzarella',
+    }
+    const results = await init();
+    await addTopping(()=>{}, moz);
+    await addTopping(()=>{}, moz);
+    const current = await addTopping(()=>{}, moz);
+    expect(current).toEqual([{
+      name: 'mozzarella',
+      display: 'mozzarella (3)'
+    }]);
+    const modified = await removeTopping(moz);
+    expect(modified).toEqual([{
+      name: 'mozzarella',
+      display: 'mozzarella (2)'
+    }]);
   });
 });

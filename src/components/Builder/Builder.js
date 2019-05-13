@@ -43,7 +43,11 @@ function addTopping(callback, { name, id }) {
           all.set(topping, all.get(topping) + 1);
           return all;
         }, new Map()),
-        ].map(([nameUpdate, count]) => `${nameUpdate} ${count === 1 ? '' : `(${count})`}`);
+        ]
+        .map(([nameUpdate, count]) => ({
+          name: nameUpdate,
+          display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`
+        }));
         return modified;
       }
       callback({
@@ -83,7 +87,7 @@ function addTopping(callback, { name, id }) {
 function removeTopping({ name }) {
   const copy = [...toppings];
   const index = copy.indexOf(name);
-  copy.splice(index);
+  copy.splice(index, 1);
   toppings = [...copy];
   const modified = [...toppings.reduce((all, topping) => {
     if (!all.get(topping)) {
@@ -93,7 +97,11 @@ function removeTopping({ name }) {
     all.set(topping, all.get(topping) + 1);
     return all;
   }, new Map()),
-  ].map(([nameUpdate, count]) => `${nameUpdate} ${count === 1 ? '' : `(${count})`}`);
+  ]
+  .map(([nameUpdate, count]) => ({
+    name: nameUpdate,
+    display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`
+  }));
   return Promise.resolve(modified);
 }
 

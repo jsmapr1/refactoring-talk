@@ -31,7 +31,7 @@ function SimpleList(props) {
         <h1>Your Custom Order</h1>
         {toppings.map(topping => (
           <ListItem divider button className={classes.item} onClick={() => onRemove(topping)}>
-            <ListItemText primary={topping} />
+            <ListItemText primary={topping.display} />
             <DeleteForeverIcon className={classes.delete} />
           </ListItem>
         ))}
