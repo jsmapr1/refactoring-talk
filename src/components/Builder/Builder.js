@@ -44,10 +44,10 @@ function addTopping(callback, { name, id }) {
           return all;
         }, new Map()),
         ]
-        .map(([nameUpdate, count]) => ({
-          name: nameUpdate,
-          display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`
-        }));
+          .map(([nameUpdate, count]) => ({
+            name: nameUpdate,
+            display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`,
+          }));
         return modified;
       }
       callback({
@@ -79,7 +79,11 @@ function addTopping(callback, { name, id }) {
         all.set(topping, all.get(topping) + 1);
         return all;
       }, new Map()),
-      ].map(([nameUpdate, count]) => `${nameUpdate} ${count === 1 ? '' : `(${count})`}`);
+      ]
+        .map(([nameUpdate, count]) => ({
+          name: nameUpdate,
+          display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`,
+        }));
       return modified;
     });
 }
@@ -89,7 +93,11 @@ function removeTopping({ name }) {
   const index = copy.indexOf(name);
   copy.splice(index, 1);
   toppings = [...copy];
-  const modified = [...toppings.reduce((all, topping) => {
+  return toppings;
+}
+
+function generateDisplayName(selected) {
+  const modified = [...selected.reduce((all, topping) => {
     if (!all.get(topping)) {
       all.set(topping, 1);
       return all;
@@ -98,11 +106,11 @@ function removeTopping({ name }) {
     return all;
   }, new Map()),
   ]
-  .map(([nameUpdate, count]) => ({
-    name: nameUpdate,
-    display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`
-  }));
-  return Promise.resolve(modified);
+    .map(([nameUpdate, count]) => ({
+      name: nameUpdate,
+      display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`,
+    }));
+  return modified;
 }
 
 function getToppings() {
@@ -157,6 +165,8 @@ export async function init() {
 export default () => ({
   addTopping,
   displayMarketingMessage,
+  generateDisplayName,
+  getToppings,
   removeTopping,
   init,
 });

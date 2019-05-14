@@ -20,17 +20,16 @@ const mozzarella = {
 
 const mockOptions = [onion, greenPeppers, mozzarella];
 
-jest.mock('../../api/toppings', () => {
-  return {
-    fetchToppings: () => Promise.resolve(mockOptions),
-    fetchTopping: (id) => Promise.resolve({ available: id !== 2 })
-  }
-});
+jest.mock('../../api/toppings', () => ({
+  fetchToppings: () => Promise.resolve(mockOptions),
+  fetchTopping: id => Promise.resolve({ available: id !== 2 }),
+}));
 
 const {
   addTopping,
   init,
   removeTopping,
+  generateDisplayName,
 } = Builder();
 
 describe('init', () => {
@@ -48,28 +47,26 @@ describe('init', () => {
 
 describe('remove topping', () => {
   it('should remove toppings', async () => {
-    const results = await init();
-    const modified = await removeTopping('mozzarella');
-    expect(modified).toEqual([]);
-  });
-
-  it('should remove already added topping', async () => {
-    const moz = { 
+    const moz = {
       id: 3,
       name: 'mozzarella',
-    }
-    const results = await init();
-    await addTopping(()=>{}, moz);
-    await addTopping(()=>{}, moz);
-    const current = await addTopping(()=>{}, moz);
-    expect(current).toEqual([{
+    };
+    await init();
+    await addTopping(() => {}, moz);
+    await addTopping(() => {}, moz);
+    const modified = removeTopping('mozzarella');
+    expect(modified).toEqual(['mozzarella']);
+  });
+
+  it('should generate names', async () => {
+    const toppings = [
+      'mozzarella',
+      'mozzarella',
+    ];
+    const names = generateDisplayName(toppings);
+    expect(names).toEqual([{
       name: 'mozzarella',
-      display: 'mozzarella (3)'
-    }]);
-    const modified = await removeTopping(moz);
-    expect(modified).toEqual([{
-      name: 'mozzarella',
-      display: 'mozzarella (2)'
+      display: 'mozzarella (2)',
     }]);
   });
 });
