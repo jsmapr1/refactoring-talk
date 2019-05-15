@@ -1,4 +1,6 @@
 import { fetchTopping, fetchToppings } from '../../api/toppings';
+import { generateDisplayName } from  './utils'
+
 import ohYeah from './images/ohyeah.gif';
 import save from './images/tobias.gif';
 
@@ -35,20 +37,7 @@ function addTopping(callback, { name, id }) {
             text: 'This is looking complicated? Would you like to save?',
           });
         }
-        const modified = [...toppings.reduce((all, topping) => {
-          if (!all.get(topping)) {
-            all.set(topping, 1);
-            return all;
-          }
-          all.set(topping, all.get(topping) + 1);
-          return all;
-        }, new Map()),
-        ]
-          .map(([nameUpdate, count]) => ({
-            name: nameUpdate,
-            display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`,
-          }));
-        return modified;
+        return generateDisplayName(toppings);
       }
       callback({
         getModalStyle: () => {
@@ -71,46 +60,14 @@ function addTopping(callback, { name, id }) {
         },
         text: 'Topping Not Available',
       });
-      const modified = [...toppings.reduce((all, topping) => {
-        if (!all.get(topping)) {
-          all.set(topping, 1);
-          return all;
-        }
-        all.set(topping, all.get(topping) + 1);
-        return all;
-      }, new Map()),
-      ]
-        .map(([nameUpdate, count]) => ({
-          name: nameUpdate,
-          display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`,
-        }));
-      return modified;
+      return generateDisplayName(toppings);
     });
 }
 
 function removeTopping({ name }) {
-  const copy = [...toppings];
-  const index = copy.indexOf(name);
-  copy.splice(index, 1);
-  toppings = [...copy];
+  const index = toppings.indexOf(name);
+  toppings = [...toppings].splice(index, 1);
   return toppings;
-}
-
-function generateDisplayName(selected) {
-  const modified = [...selected.reduce((all, topping) => {
-    if (!all.get(topping)) {
-      all.set(topping, 1);
-      return all;
-    }
-    all.set(topping, all.get(topping) + 1);
-    return all;
-  }, new Map()),
-  ]
-    .map(([nameUpdate, count]) => ({
-      name: nameUpdate,
-      display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`,
-    }));
-  return modified;
 }
 
 function getToppings() {
@@ -140,7 +97,7 @@ function displayMarketingMessage(callback, config) {
           };
         },
         image: ohYeah,
-        text: 'Dude, you rock so F****cking hard',
+        text: 'Dude, you rock so hard',
       },
     );
   }, config.time);
@@ -165,7 +122,6 @@ export async function init() {
 export default () => ({
   addTopping,
   displayMarketingMessage,
-  generateDisplayName,
   getToppings,
   removeTopping,
   init,

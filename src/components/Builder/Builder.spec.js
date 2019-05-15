@@ -29,7 +29,6 @@ const {
   addTopping,
   init,
   removeTopping,
-  generateDisplayName,
 } = Builder();
 
 describe('init', () => {
@@ -56,17 +55,5 @@ describe('remove topping', () => {
     await addTopping(() => {}, moz);
     const modified = removeTopping('mozzarella');
     expect(modified).toEqual(['mozzarella']);
-  });
-
-  it('should generate names', async () => {
-    const toppings = [
-      'mozzarella',
-      'mozzarella',
-    ];
-    const names = generateDisplayName(toppings);
-    expect(names).toEqual([{
-      name: 'mozzarella',
-      display: 'mozzarella (2)',
-    }]);
   });
 });

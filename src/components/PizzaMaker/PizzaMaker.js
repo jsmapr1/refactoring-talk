@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Options from '../Options/Options';
 import Choices from '../Choices/Choices';
 import Builder from '../Builder/Builder';
+import { generateDisplayName } from '../Builder/utils';
 import Modal from '../Modal/Modal';
 
 export default function PizzaMaker() {
