@@ -7,13 +7,31 @@ import save from './images/tobias.gif';
 let toppings = [];
 let askedSaved = false;
 
+const limiter = (...limits) => {
+  let asked = false;
+  return (...args) => {
+    if(asked) {
+      return true;
+    }
+    const reached = limits.every((limit, index) => {
+      return limit(args[index]);
+    })
+    if(!reached) {
+      return false;
+    }
+    asked = true;
+    return true;
+  }
+}
+
+const toppingsLimitReached = limiter(toppings => toppings.length > 3);
+
 function addTopping(callback, { name, id }) {
   return fetchTopping(id)
     .then(({ available }) => {
       if (available) {
         toppings = [...toppings, name];
-        if (toppings.length > 3 && !askedSaved) {
-          askedSaved = true;
+        if (toppingsLimitReached(toppings)) {
           const modalConfig = generateModalConfig({
             image: save,
             text: 'This is looking complicated? Would you like to save?',
