@@ -1,24 +1,23 @@
-function removeTopping({ name }) {
-  const copy = [...toppings];
-  const index = copy.indexOf(name);
-  copy.splice(index, 1);
-  toppings = [...copy];
-  return toppings;
-}
-
-function generateDisplayName(selected) {
-  const modified = [...selected.reduce((all, topping) => {
-    if (!all.get(topping)) {
-      all.set(topping, 1);
-      return all;
-    }
-    all.set(topping, all.get(topping) + 1);
-    return all;
-  }, new Map()),
-  ]
-  .map(([nameUpdate, count]) => ({
-    name: nameUpdate,
-    display: `${nameUpdate} ${count === 1 ? '' : `(${count})`}`
-  }));
-  return modified;
+function addTopping(callback, { name, id }) {
+  return fetchTopping(id)
+    .then(({ available }) => {
+      if (available) {
+        toppings = [...toppings, name];
+        if (toppings.length > 3 && !askedSaved) {
+          askedSaved = true;
+          const modalConfig = generateModalConfig({
+            image: save,
+            text: 'This is looking complicated? Would you like to save?',
+            width: 600,
+          })
+          callback(modalConfig);
+        }
+        return generateDisplayName(toppings);
+      }
+      const modalConfig = generateModalConfig({
+        text: 'Topping Not Available',
+      })
+      callback(modalConfig);
+      return generateDisplayName(toppings);
+    });
 }

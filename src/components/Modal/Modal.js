@@ -15,7 +15,8 @@ export default function Modal({ open, onClose, marketingMessage }) {
           style={{
           }}
         >
-          <img src={marketingMessage && marketingMessage.image} alt="marketing" />
+          {marketingMessage && marketingMessage.image && <img src={marketingMessage && marketingMessage.image} alt="marketing" />
+          }
         </div>
       </div>
     </MaterialModal>

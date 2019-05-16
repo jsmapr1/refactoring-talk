@@ -1,5 +1,5 @@
 import { fetchTopping, fetchToppings } from '../../api/toppings';
-import { generateDisplayName } from  './utils'
+import { generateDisplayName, generateModalConfig } from  './utils'
 
 import ohYeah from './images/ohyeah.gif';
 import save from './images/tobias.gif';
@@ -14,52 +14,19 @@ function addTopping(callback, { name, id }) {
         toppings = [...toppings, name];
         if (toppings.length > 3 && !askedSaved) {
           askedSaved = true;
-          callback({
-            getModalStyle: () => {
-              const top = 50;
-              const left = 50;
-              return {
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                position: 'absolute',
-                width: 600,
-                backgroundColor: '#fff',
-                boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
-                padding: 32,
-                outline: 'none',
-                top: `${top}%`,
-                left: `${left}%`,
-                transform: `translate(-${top}%, -${left}%)`,
-              };
-            },
+          const modalConfig = generateModalConfig({
             image: save,
             text: 'This is looking complicated? Would you like to save?',
-          });
+            width: 600,
+          })
+          callback(modalConfig);
         }
-        return generateDisplayName(toppings);
+      } else {
+        const modalConfig = generateModalConfig({
+          text: 'Topping Not Available',
+        })
+        callback(modalConfig);
       }
-      callback({
-        getModalStyle: () => {
-          const top = 50;
-          const left = 50;
-          return {
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            position: 'absolute',
-            width: 400,
-            backgroundColor: '#fff',
-            boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
-            padding: 32,
-            outline: 'none',
-            top: `${top}%`,
-            left: `${left}%`,
-            transform: `translate(-${top}%, -${left}%)`,
-          };
-        },
-        text: 'Topping Not Available',
-      });
       return generateDisplayName(toppings);
     });
 }
@@ -75,31 +42,13 @@ function getToppings() {
 }
 
 function displayMarketingMessage(callback, config) {
+  const text = 'Dude, you rock so hard';
+  const modalConfig = generateModalConfig({
+    image: ohYeah,
+    text,
+  });
   setTimeout(() => {
-    callback(
-      {
-        getModalStyle: () => {
-          const top = 50;
-          const left = 50;
-          return {
-            position: 'absolute',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            width: 400,
-            backgroundColor: '#fff',
-            boxShadow: '1px 3px 5px -1px rgba(0,0,0,0.2), 0px 5px 8px 0px rgba(0,0,0,0.14), 0px 1px 14px 0px rgba(0,0,0,0.12)',
-            padding: 32,
-            outline: 'none',
-            top: `${top}%`,
-            left: `${left}%`,
-            transform: `translate(-${top}%, -${left}%)`,
-          };
-        },
-        image: ohYeah,
-        text: 'Dude, you rock so hard',
-      },
-    );
+    callback(modalConfig);
   }, config.time);
 }
 
