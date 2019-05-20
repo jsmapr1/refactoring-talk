@@ -7,15 +7,13 @@ import save from './images/tobias.gif';
 let toppings = [];
 let askedSaved = false;
 
-const limiter = (...limits) => {
+const thresholdAlert = (...limits) => {
   let asked = false;
-  return (...args) => {
+  return (args) => {
     if(asked) {
-      return true;
+      return false;
     }
-    const reached = limits.every((limit, index) => {
-      return limit(args[index]);
-    })
+    const reached = limits.every(limit => limit(args));
     if(!reached) {
       return false;
     }
@@ -24,34 +22,40 @@ const limiter = (...limits) => {
   }
 }
 
-const toppingsLimitReached = limiter(toppings => toppings.length > 3);
+const sendLengthAlert = thresholdAlert(({ toppings}) => toppings.length > 3);
 
-function addTopping(callback, { name, id }) {
+function checkAvailability(id) {
   return fetchTopping(id)
-    .then(({ available }) => {
-      if (available) {
-        toppings = [...toppings, name];
-        if (toppingsLimitReached(toppings)) {
-          const modalConfig = generateModalConfig({
-            image: save,
-            text: 'This is looking complicated? Would you like to save?',
-            width: 600,
-          })
-          callback(modalConfig);
-        }
-      } else {
-        const modalConfig = generateModalConfig({
-          text: 'Topping Not Available',
-        })
-        callback(modalConfig);
-      }
-      return generateDisplayName(toppings);
-    });
+  .then(({ available }) => available)
+}
+
+function getUnavailableMessage() {
+  return generateModalConfig({
+    text: 'Topping Not Available',
+  })
+}
+
+function addTopping(name) {
+    toppings = [...toppings, name];
+    return toppings;
+}
+
+function checkToppingLimit(toppings) {
+  if(sendLengthAlert({ toppings })) {
+    return generateModalConfig({
+      image: save,
+      text: 'This is looking complicated? Would you like to save?',
+      width: 600,
+    })
+  }
+  return null;
 }
 
 function removeTopping({ name }) {
   const index = toppings.indexOf(name);
-  toppings = [...toppings].splice(index, 1);
+  const update = [...toppings];
+  update.splice(index, 1);
+  toppings = update
   return toppings;
 }
 
@@ -88,8 +92,11 @@ export async function init() {
 
 export default () => ({
   addTopping,
+  checkAvailability,
+  checkToppingLimit,
   displayMarketingMessage,
   getToppings,
+  getUnavailableMessage,
   removeTopping,
   init,
 });

@@ -1,23 +1,16 @@
-function addTopping(callback, { name, id }) {
-  return fetchTopping(id)
-    .then(({ available }) => {
-      if (available) {
-        toppings = [...toppings, name];
-        if (toppings.length > 3 && !askedSaved) {
-          askedSaved = true;
-          const modalConfig = generateModalConfig({
-            image: save,
-            text: 'This is looking complicated? Would you like to save?',
-            width: 600,
-          })
-          callback(modalConfig);
-        }
-        return generateDisplayName(toppings);
-      }
-      const modalConfig = generateModalConfig({
-        text: 'Topping Not Available',
-      })
-      callback(modalConfig);
-      return generateDisplayName(toppings);
-    });
+const limiter = (...limits) => {
+  let asked = false;
+  return (...args) => {
+    if(asked) {
+      return true;
+    }
+    const reached = limits.every((limit, index) => {
+      return limit(args[index]);
+    })
+    if(!reached) {
+      return false;
+    }
+    asked = true;
+    return true;
+  }
 }

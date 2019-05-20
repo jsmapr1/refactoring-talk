@@ -51,8 +51,8 @@ describe('remove topping', () => {
       name: 'mozzarella',
     };
     await init();
-    await addTopping(() => {}, moz);
-    await addTopping(() => {}, moz);
+    addTopping('mozzarella');
+    addTopping('mozzarella');
     const modified = removeTopping('mozzarella');
     expect(modified).toEqual(['mozzarella']);
   });
