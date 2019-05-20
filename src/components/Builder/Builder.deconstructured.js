@@ -1,12 +1,10 @@
-const limiter = (...limits) => {
+const thresholdAlert = (...limits) => {
   let asked = false;
-  return (...args) => {
+  return (args) => {
     if(asked) {
-      return true;
+      return false;
     }
-    const reached = limits.every((limit, index) => {
-      return limit(args[index]);
-    })
+    const reached = limits.every(limit => limit(args));
     if(!reached) {
       return false;
     }

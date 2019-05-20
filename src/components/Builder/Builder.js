@@ -9,11 +9,11 @@ let askedSaved = false;
 
 const thresholdAlert = (...limits) => {
   let asked = false;
-  return (args) => {
+  return (arg) => {
     if(asked) {
       return false;
     }
-    const reached = limits.every(limit => limit(args));
+    const reached = limits.every(limit => limit(arg));
     if(!reached) {
       return false;
     }
