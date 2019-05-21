@@ -7,7 +7,7 @@ import save from './images/tobias.gif';
 let toppings = [];
 let askedSaved = false;
 
-const thresholdAlert = (...limits) => {
+function setThresholdAlert(...limits) {
   let asked = false;
   return (arg) => {
     if(asked) {
@@ -22,7 +22,7 @@ const thresholdAlert = (...limits) => {
   }
 }
 
-const sendLengthAlert = thresholdAlert(({ toppings}) => toppings.length > 3);
+const sendLengthAlert = setThresholdAlert(({ toppings}) => toppings.length > 3);
 
 function checkAvailability(id) {
   return fetchTopping(id)
